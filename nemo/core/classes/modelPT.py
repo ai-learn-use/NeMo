@@ -20,7 +20,7 @@ import tarfile
 import tempfile
 from abc import abstractmethod
 from os import path
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import hydra
 import torch
@@ -166,7 +166,7 @@ class ModelPT(LightningModule, Model):
             self.__make_nemo_file_from_folder(filename=save_path, source_dir=tmpdir)
 
     @classmethod
-    def restore_from(cls, restore_path: str):
+    def restore_from(cls, restore_path: str, **kwargs: Any):
         """
         Restores model instance (weights and configuration) into .nemo file
         Args:
@@ -190,8 +190,13 @@ class ModelPT(LightningModule, Model):
             model_weights = path.join(tmpdir, _MODEL_WEIGHTS)
             conf = OmegaConf.load(config_yaml)
             OmegaConf.set_struct(conf, True)
+<<<<<<< HEAD
             instance = cls.from_config_dict(config=conf)
             instance.load_state_dict(torch.load(model_weights))
+=======
+            instance = cls.from_config_dict(config=conf, **kwargs)
+            instance.load_state_dict(state_dict=torch.load(model_weights))
+>>>>>>> restore from fix
         return instance
 
     @abstractmethod
