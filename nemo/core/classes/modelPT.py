@@ -190,13 +190,8 @@ class ModelPT(LightningModule, Model):
             model_weights = path.join(tmpdir, _MODEL_WEIGHTS)
             conf = OmegaConf.load(config_yaml)
             OmegaConf.set_struct(conf, True)
-<<<<<<< HEAD
-            instance = cls.from_config_dict(config=conf)
-            instance.load_state_dict(torch.load(model_weights))
-=======
             instance = cls.from_config_dict(config=conf, **kwargs)
             instance.load_state_dict(state_dict=torch.load(model_weights))
->>>>>>> restore from fix
         return instance
 
     @abstractmethod
