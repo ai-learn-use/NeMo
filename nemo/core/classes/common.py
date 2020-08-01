@@ -247,7 +247,7 @@ class Serialization(ABC):
             instance = hydra.utils.instantiate(config=config, *args, **kwargs)
         else:
             # models are handled differently for now
-            instance = cls(cfg=config)
+            instance = cls(cfg=config, *args, **kwargs)
 
         if not hasattr(instance, '_cfg'):
             instance._cfg = config

@@ -166,7 +166,7 @@ class ModelPT(LightningModule, Model):
             self.__make_nemo_file_from_folder(filename=save_path, source_dir=tmpdir)
 
     @classmethod
-    def restore_from(cls, restore_path: str, **kwargs: Any):
+    def restore_from(cls, restore_path: str, *args: Any, **kwargs: Any):
         """
         Restores model instance (weights and configuration) into .nemo file
         Args:
@@ -190,7 +190,7 @@ class ModelPT(LightningModule, Model):
             model_weights = path.join(tmpdir, _MODEL_WEIGHTS)
             conf = OmegaConf.load(config_yaml)
             OmegaConf.set_struct(conf, True)
-            instance = cls.from_config_dict(config=conf, **kwargs)
+            instance = cls.from_config_dict(config=conf, *args, **kwargs)
             instance.load_state_dict(state_dict=torch.load(model_weights))
         return instance
 
